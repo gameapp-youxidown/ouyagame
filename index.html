@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>请在浏览器中打开</title>
+    <style>
+        .guide-container {
+            text-align: center;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+        }
+        .guide-image {
+            max-width: 100%;
+            margin: 20px auto;
+            display: none; /* 默认隐藏两张图片 */
+        }
+        .guide-text {
+            font-size: 16px;
+            color: #333;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        // 目标跳转链接
+        const targetUrl = "https://gameappxz1212-7gfu9ubu76d32df1-1330370741.tcloudbaseapp.com/ouyayule"; 
+
+        // 检测是否在微信或QQ内打开
+        function isWeixin() {
+            return navigator.userAgent.toLowerCase().indexOf('micromessenger') !== -1;
+        }
+
+        function isQQ() {
+            const ua = navigator.userAgent.toLowerCase();
+            // 排除 QQBrowser 和 mqqbrowser
+            return ua.indexOf('qq') !== -1 && 
+                   ua.indexOf('qqbrowser') === -1 && 
+                   ua.indexOf('mqqbrowser') === -1;
+        }
+
+        // 页面加载完成后执行
+        window.onload = function() {
+            if (isWeixin() || isQQ()) {
+                // 如果是微信或QQ内打开，显示引导页
+                document.body.innerHTML = `
+                    <div class="guide-container">
+                        <h2>请在浏览器中打开</h2>
+                        <p class="guide-text">点击右上角菜单，选择"在浏览器中打开"</p>
+                        
+                        <!-- 微信引导图片 -->
+                        <img src="icon.jpg" class="guide-image" id="wechatGuide">
+                        
+                        <!-- QQ引导图片 -->
+                        <img src="icon.jpg" class="guide-image" id="qqGuide">
+                    </div>
+                `;
+
+                // 根据环境显示对应的图片
+                if (isWeixin()) {
+                    document.getElementById('wechatGuide').style.display = 'block';
+                } else if (isQQ()) {
+                    document.getElementById('qqGuide').style.display = 'block';
+                }
+            } else {
+                // 如果是浏览器打开，直接跳转
+                window.location.href = targetUrl;
+            }
+        }
+    </script>
+</body>
+</html>
